@@ -20,4 +20,23 @@ class ShortUrl
         $this->baseLength = strlen($this->baseString);
     }
 
+    /**
+     * @return String
+     */
+    public function encode(int $num): string
+    {
+        if (!is_numeric($num)) {
+            throw new Exception('TypeError : $num of value must be integer.');
+        }
+
+        $encode = '';
+
+        while ($num) {
+            $remainder = $num % $this->baseLength;
+            $num       = floor($num / $this->baseLength);
+            $encode   .= $this->baseString[$remainder];
+        }
+
+        return strrev($encode);
+    }
 }
