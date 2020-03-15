@@ -39,4 +39,26 @@ class ShortUrl
 
         return strrev($encode);
     }
+
+    /**
+     * @return Integer
+     */
+    public function decode(string $str): int
+    {
+        $decode = 0;
+
+        while ($str) {
+            $position = strrpos($this->baseString, $str[0]);
+
+            if ($position < 0) {
+                throw new Exception('"decode" can\'t find "' + $str[0] + '" in the alphabet: "' + $this->baseString + '"');
+            }
+
+            $power = strlen($str) - 1;
+            $decode += $position * pow($this->baseLength, $power);
+            $str = substr($str, 1);
+        }
+
+        return $decode;
+    }
 }
